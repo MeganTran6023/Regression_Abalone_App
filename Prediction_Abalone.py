@@ -1,24 +1,22 @@
-# # Running
-#conda activate dp
-# python -m streamlit run your_script.py
-
 #imports
+
+## core
 import streamlit as st
 import pandas as pd
 import numpy as np
+## sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 
- 
-# File uploader
-# upload_file = st.file_uploader('Upload CSV file.')
-# dataf = pd.read_csv(upload_file)
-# st.dataframe(df,width=1800, height = 1200)
+# Kaggle dataset:
+# https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
+# code referenced:
+# https://github.com/dataprofessor/code/blob/master/streamlit/part2/iris-ml-app.py
 
-
-#Tutorial based off of: https://github.com/dataprofessor/code/blob/master/streamlit/part2/Abalone-ml-app.py
-
+#Title 
 st.write("""
 
-# Simple Abalone Flower Prediction App
+# Simple Abalone Tree Prediction App
 
 This app predicts the **Abalone tree** age!
 """)
@@ -28,40 +26,69 @@ st.write("""
 ## Abalone Dataset
 """)
 
-#View Abalone csv file
-data_ab = pd.read_csv("abalone.csv") #path folder of the data file
-# one hot encoder with gender
+# Load Abalone dataset
+data_ab = pd.read_csv("abalone_genderDict.csv")
+# Replace with your correct file path
 
-st.write(data_ab) #displays the table of data
+# Check if 'Rings' column exists before dropping
+if 'Rings' in data_ab.columns:
+    st.write(data_ab)
+    X = data_ab.drop(columns=['Rings'])  # Separate features
+    y = data_ab["Rings"]  # Target variable
+else:
+    st.write("The 'Rings' column is not found in the dataset. Please check your data source.")
+    X = data_ab  # No target variable to process further
 
 st.sidebar.header('User Input Parameters')
-#function for input parameters
+
+
+# Function for user input features
 def user_input_features():
-    length = st.sidebar.slider('Length', 0.0 , 1.0, 0.5)
-    diameter = st.sidebar.slider('Diameter', 0.0 , 1.0, 0.5)
-    height = st.sidebar.slider('Height', 0.0 , 2.0, 1.0)
-    
+    sex = st.sidebar.selectbox('Sex', data_ab['Sex'].unique())
+    length = st.sidebar.slider('Length', float(data_ab['Length'].min()),
+                               float(data_ab['Length'].max()), 1.0)
+    diameter = st.sidebar.slider('Diameter', float(data_ab['Diameter'].min()),
+                                 float(data_ab['Diameter'].max()), 1.0)
+    height = st.sidebar.slider('Height', float(data_ab['Height'].min()),
+                               float(data_ab['Height'].max()), 2.0)
+    whole_weight = st.sidebar.slider('Whole weight', float(data_ab['Whole weight'].min()),
+                                    float(data_ab['Whole weight'].max()), 3.0)
+    shucked_weight = st.sidebar.slider('Shucked weight', float(data_ab['Shucked weight'].min()),
+                                     float(data_ab['Shucked weight'].max()), 2.0)
+    viscera_weight = st.sidebar.slider('Viscera weight', float(data_ab['Viscera weight'].min()),
+                                      float(data_ab['Viscera weight'].max()), 1.0)
+    shell_weight = st.sidebar.slider('Shell weight', float(data_ab['Shell weight'].min()),
+                                     float(data_ab['Shell weight'].max()), 1.0)
 
+    user_data = {'Sex': sex,
+                 'Length': length, 'Diameter': diameter, 'Height': height,
+                 'Whole weight': whole_weight, 'Shucked weight': shucked_weight,
+                 'Viscera weight': viscera_weight, 'Shell weight': shell_weight}
+
+    df = pd.DataFrame(user_data, index=[0])
+
+
+
+    return df
+
+
+# Get user input
 df = user_input_features()
-
 st.subheader('User Input parameters')
 st.write(df)
 
+# Only proceed with training and prediction if 'Rings' exists
+if 'Rings' in data_ab.columns:
+    # Split data into training and testing sets (assuming 'Rings' is the target variable)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, shuffle=True)
 
-# Show table of features and value user input:
+    # Create and train the model (Linear Regression)
+    model = LinearRegression()
+    model.fit(X_train, y_train)
 
+    # Make predictions on user input data
+    prediction = model.predict(df)
 
-#### Dataset
-
-#1 - initializing Variables
-
-X = data_ab.drop(columns=["Rings"])
-y = data_ab["Rings"]
-
-#2 - Logistic Regression Model
-
-#imports
-from sklearn.linear_model import LogisticRegression
-
-logreg = LogisticRegression()
-logreg.fit(X, y)
+    # Display the predicted rings
+    st.subheader('Predicted Rings')
+    st.write(prediction)

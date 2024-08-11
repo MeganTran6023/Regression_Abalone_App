@@ -35,11 +35,22 @@ python -m streamlit run Prediction_Abalone.py
 
 ```
 
+sentiment_labels_to_numbers = {
+    "M" : 0,
+    "F" : 1,
+    "I": 2
+}
+
+
 ```
 
   ii) Model performance accuracy was measured using
 
 ```
+
+print('Accuracy of linear regression classifier on test set: {:.2f}'.format(logreg.score(X_test, y_test)))
+
+>>> Accuracy of logistic regression classifier on test set: 0.54
 
 ```
 

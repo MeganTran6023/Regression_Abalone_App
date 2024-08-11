@@ -8,6 +8,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
+
+
 # Kaggle dataset:
 # https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 # code referenced:
@@ -89,6 +91,11 @@ if 'Rings' in data_ab.columns:
     # Make predictions on user input data
     prediction = model.predict(df)
 
+    # Round the predicted rings to the nearest whole number, with:
+    #   - Positive values rounded up
+    #   - Negative values rounded to zero (floor)
+    rounded_prediction = np.where(prediction >= 0, np.round(prediction), 0)
+
     # Display the predicted rings
     st.subheader('Predicted Rings')
-    st.write(prediction)
+    st.write(rounded_prediction)  # Assuming a single prediction

@@ -10,15 +10,25 @@
 
 ## ℹ️ Overview
 
-Machine learning is useful for the prediction of some desired feature in real world problems. To improve 
+Machine learning is useful for the prediction of some desired feature in real world problems. To captre the public's attnetion, data from the pipeline must be presented in a enganging manner. Here, I used streamlit as the medium to deploy my python linear regression model on the Abalone dataset to predict the number of rings/ its age.
 
 ## 🚀 Usage
 
 **a) Requirements**
 * python 3.X (I used Python 3.10.9)
+* numpy (I used numpy version 1.23.5)
+* streamlit
+* sklearn (version 1.5.1)
 
+**b) Deployment**
 
+After downloading both .py and.csv file, cd into file directory where you downloaded the two files and run in terminal of IDE (I used VSCode):
 
+```
+
+python -m streamlit run Prediction_Abalone.py
+
+```
 
 ## ⬇️ Installation
 

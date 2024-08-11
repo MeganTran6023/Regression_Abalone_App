@@ -48,9 +48,9 @@ sentiment_labels_to_numbers = {
 
 ```
 
-print('Accuracy of linear regression classifier on test set: {:.2f}'.format(logreg.score(X_test, y_test)))
+print('Accuracy of linear regression classifier on test set: {:.2f}'.format(linreg.score(X_test, y_test)))
 
->>> Accuracy of logistic regression classifier on test set: 0.54
+>>> Accuracy of linear regression classifier on test set: 0.54
 
 ```
 

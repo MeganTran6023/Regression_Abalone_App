@@ -74,7 +74,7 @@ pip install {package}
 
 ## 💭 Future Improvements
 
-* Round number of rings to nearest whole number for "Predicted Rings"
+* ~~Round number of rings to nearest whole number for "Predicted Rings"~~
 * Change Input Parameter scale to alllow prediction of larger values
 * include the original dataset with original genders then used preprocesssed csv for machine learning step
 

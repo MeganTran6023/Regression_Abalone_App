@@ -29,6 +29,20 @@ After downloading both .py and.csv file, cd into file directory where you downlo
 python -m streamlit run Prediction_Abalone.py
 
 ```
+**c) Dataset + Model Analysis**
+
+  i) The model could not process strings in the 'Gender' column of the dataframe, so a dictionary was used to convert each gender option to a number.
+
+```
+
+```
+
+  ii) Model performance accuracy was measured using
+
+```
+
+```
+
 
 ## ⬇️ Installation
 
@@ -39,6 +53,10 @@ pip install {package}
 
 **packages:**
 
+* streamlit
+* pandas
+* numpy
+* sklearn
 
 
 ## 💭 Future Improvements

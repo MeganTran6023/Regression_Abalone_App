@@ -31,6 +31,8 @@ python -m streamlit run Prediction_Abalone.py
 ```
 **c) Dataset + Model Analysis**
 
+File used: Abalone_csv.ipynb
+
   i) The model could not process strings in the 'Gender' column of the dataframe, so a dictionary was used to convert each gender option to a number.
 
 ```
@@ -71,4 +73,8 @@ pip install {package}
 
 
 ## 💭 Future Improvements
+
+* Round number of rings to nearest whole number for "Predicted Rings"
+* Change Input Parameter scale to alllow prediction of larger values
+* include the original dataset with original genders then used preprocesssed csv for machine learning step
 
